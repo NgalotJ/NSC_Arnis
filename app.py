@@ -52,7 +52,6 @@ mp_drawing = mp.solutions.drawing_utils
 mp_pose = mp.solutions.pose
 pose = mp_pose.Pose(min_tracking_confidence=0.5, min_detection_confidence=0.5) 
 
-# with open('deadlift.pkl', 'rb') as file: 
 with open('arnis_svc_model.pkl', 'rb') as file:
     model = pickle.load(file) 
 
@@ -82,13 +81,13 @@ def detect():
         X = pd.DataFrame([row], columns = landmarks) 
         bodylang_prob = model.predict_proba(X)[0]
         bodylang_class = model.predict(X)[0] 
-        print("strike: " + bodylang_class)
+        print(bodylang_class, bodylang_prob[bodylang_prob.argmax()])
 
-        if bodylang_class =="1. Right Temple" and bodylang_prob[bodylang_prob.argmax()] > 0.7: 
+        if bodylang_class =="1. Right Temple Strike" and bodylang_prob[bodylang_prob.argmax()] > 0.5: 
             current_stage = "Right Temple" 
-        elif bodylang_class =="2. Stomach Thrust" and bodylang_prob[bodylang_prob.argmax()] > 0.7: 
+        elif bodylang_class =="2. Stomach Thrust" and bodylang_prob[bodylang_prob.argmax()] > 0.5: 
             current_stage = "Stomach Thrust" 
-        elif bodylang_class =="3. Left Knee" and bodylang_prob[bodylang_prob.argmax()] > 0.7: 
+        elif bodylang_class =="3. Left Knee Strike" and bodylang_prob[bodylang_prob.argmax()] > 0.5: 
             current_stage = "Left Knee"
 
     except Exception as e: 
