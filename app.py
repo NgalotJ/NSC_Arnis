@@ -84,11 +84,12 @@ def detect():
         bodylang_class = model.predict(X)[0] 
         print("strike: " + bodylang_class)
 
-        if bodylang_class =="down" and bodylang_prob[bodylang_prob.argmax()] > 0.7: 
-            current_stage = "down" 
-        elif current_stage == "down" and bodylang_class == "up" and bodylang_prob[bodylang_prob.argmax()] > 0.7:
-            current_stage = "up" 
-            counter += 1 
+        if bodylang_class =="1. Right Temple" and bodylang_prob[bodylang_prob.argmax()] > 0.7: 
+            current_stage = "Right Temple" 
+        elif bodylang_class =="2. Stomach Thrust" and bodylang_prob[bodylang_prob.argmax()] > 0.7: 
+            current_stage = "Stomach Thrust" 
+        elif bodylang_class =="3. Left Knee" and bodylang_prob[bodylang_prob.argmax()] > 0.7: 
+            current_stage = "Left Knee"
 
     except Exception as e: 
         print("error: ")
@@ -102,7 +103,7 @@ def detect():
     lmain.after(10, detect)  
 
     counterBox.configure(text=counter) 
-    probBox.configure(text=bodylang_prob[bodylang_prob.argmax()]) 
+    probBox.configure(text="{:.2f}".format(bodylang_prob[bodylang_prob.argmax()])) 
     classBox.configure(text=current_stage) 
 
 detect() 
