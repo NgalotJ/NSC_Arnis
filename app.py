@@ -91,7 +91,6 @@ def detect():
         else:
             current_stage = "Strike not clear"
 
-
     except Exception as e: 
         print("error: ")
         print(e) 
