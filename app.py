@@ -31,7 +31,7 @@ classBox.configure(text='0')
 probBox = ck.CTkLabel(window, height=40, width=100, font=("Arial", 20), text_color="white", fg_color="green")
 probBox.place(x=170, y=43)
 probBox.configure(text='0') 
-counterBox = ck.CTkLabel(window, height=40, width=150, font=("Arial", 20), text_color="white", fg_color="green")
+counterBox = ck.CTkLabel(window, height=40, width=190, font=("Arial", 20), text_color="white", fg_color="green")
 counterBox.place(x=280, y=43)
 counterBox.configure(text='0') 
 
@@ -84,7 +84,8 @@ def detect():
             current_stage = "Strike not clear"
 
         if max_prob >= .70 and current_stage != "Strike not clear":
-            highestProb = bodylang_class.split(". ")[1]
+            highestProb = bodylang_class.split(". ")[1].replace("Strike", "").replace("Thrust", "Thrust ")
+            
 
     except Exception as e: 
         print("error: ")
@@ -97,7 +98,7 @@ def detect():
     lmain.configure(image=imgtk)
     lmain.after(10, detect)  
 
-    counterBox.configure(text = str(highestProb) + " {:.2f}".format(float(max_prob))) 
+    counterBox.configure(text = str(highestProb) + "{:.2f}".format(float(max_prob))) 
     probBox.configure(text = "{:.2f}".format(max_prob)) 
     classBox.configure(text = current_stage) 
 
